@@ -5,21 +5,16 @@ import http from 'http';
 import typeDefs from './type-defs.js'
 import resolvers from './resolvers.js';
 
-import {MongoClient} from 'mongodb'
+import {MongoClient, ObjectId} from 'mongodb'
 import dotenv from 'dotenv'
 
 dotenv.config()
 const { FULL_DB_URL } = process.env
 
-//const client = new MongoClient(FULL_DB_URL)
 const client = await MongoClient.connect(FULL_DB_URL)
 export const db = client.db()
 
-const collection = db.collection("posts")
-
 startApolloServer(typeDefs, resolvers)
-
-
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
