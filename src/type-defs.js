@@ -8,13 +8,13 @@ export default gql`
 
   # This "Post" type defines the queryable fields for every book in our data source.
   type Post {
-      _id : ID
+    _id : ID
     title: String
     author: Author!
   }
 
   type Author{
-      _id : ID!
+      _id : ID
       name : String!
       born_year : Int
       posts: [Post]
@@ -24,7 +24,7 @@ export default gql`
   # clients can execute, along with the return type for each. In this
   # case, the "posts" query returns an array of zero or more Posts (defined above).
   type Query {
-    posts(title : String, author : String): [Post],
+    posts(title : String, author : ID): [Post],
     post(_id: ID!): Post
     author(_id: ID!) : Author
     authors : [Author]

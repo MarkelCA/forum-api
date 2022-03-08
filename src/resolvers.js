@@ -1,37 +1,47 @@
 import {ObjectId} from 'mongodb';
-import { db } from './server.js';
+import { db, Post, Author } from './server.js';
 
-const prepare = (o) => {
-  o._id = o._id.toString()
-  return o
+const getPosts = async (author) => {
+}
+
+const getAuthor = async (post) => {
+    post.author = await Author.findOne({_id : post.author})
+    return post
 }
 
 export default {
-  Query: {
-      posts: async(parent, args) => {
-        const postTable = db.collection('posts')
-        const posts = await postTable.find(args).toArray()
-        return (posts)
+    Query: {
+        posts: async(parent, args) => {
+            const posts = (await Post.find({}).toArray())
+            return (posts)
+        },
+        post: async(parent, {id}) => {
+            const post = await Post.findOne({_id : ObjectId(id)})
+            return (post)
+        },
+        author: async(parent, {_id}) => {
+            const author = await Author.findOne({_id : ObjectId(_id)})
+            return (author)
+        },
+        authors : async () => {
+            const authors = (await Author.find().toArray())
+            return  authors
+
+        },
     },
-      post: async(parent, {id}) => {
-        const postTable = db.collection('posts')
-          const post = await postTable.findOne({_id : ObjectId(id)})
-          console.log(post)
-        return (post)
-      },
-      author: async(parent, {id}) => {
-        const authorsTable = db.collection('authors')
-        const postTable = db.collection('posts')
-        const author = await authorsTable.findOne({_id : ObjectId(id)})
-
-        return (author)
-      },
-      authors : async () => {
-        const authorsTable = db.collection('authors')
-          const authors = (await authorsTable.find().toArray()).map(prepare)
-          console.log(authors)
-          return  authors
-
-      }
-  },
+   Author : {
+       name: async (author) => {
+           const aut = await Author.findOne({_id : author._id})
+           return aut.name
+       },
+       posts: async(author) => {
+           const posts = await Post.find({author : author._id }).toArray()
+            return posts
+       }
+    },
+    Post : {
+     author : async(post) => {
+         return await Author.findOne({_id : post.author});
+     }
+    }
 };

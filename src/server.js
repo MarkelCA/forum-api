@@ -13,6 +13,8 @@ const { FULL_DB_URL } = process.env
 
 const client = await MongoClient.connect(FULL_DB_URL)
 export const db = client.db()
+export const Post = db.collection('posts')
+export const Author = db.collection('authors')
 
 startApolloServer(typeDefs, resolvers)
 
