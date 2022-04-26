@@ -7,7 +7,7 @@ export default class PostService {
     }
 
     getPosts = async() : Promise<Document> => {
-        return this.collection.find()
+        return this.collection.find().toArray()
     }
 
 }

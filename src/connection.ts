@@ -7,7 +7,7 @@ async function connect() : Promise<Db> {
 
     const { DB_CONN_STRING, DB_USER, PASSWORD, DB_NAME, DB_HOST } = process.env
 
-    const conn_string = DB_CONN_STRING ? DB_CONN_STRING : `mongodb+srv://${DB_USER}:${PASSWORD}@${DB_HOST}}`
+    const conn_string = DB_CONN_STRING ? DB_CONN_STRING : ""
 
    const client: MongoClient = new MongoClient(conn_string);
            

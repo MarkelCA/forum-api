@@ -1,6 +1,12 @@
 import {Document, ObjectId} from 'mongodb';
-import PostService from './post/PostService';
 
+export default class Resolver {
+    static resolvers = {}
+
+    static buildResolvers() : object {
+        return {}
+    }
+}
 
 //const getPosts = async (author) => {
 //}
@@ -10,13 +16,13 @@ import PostService from './post/PostService';
     //return post
 //}
 
-export default {
-    Query: {
-        posts: async(parent: Document|undefined, args:Object|undefined) => {
-            console.log(parent, args)
-            //const posts = (await Post.find({}).toArray())
-            //return (posts)
-        },
+export {
+    //Query: {
+        //posts: async(parent: Document|undefined, args:Object|undefined) => {
+            //console.log(parent, args)
+            ////const posts = (await Post.find({}).toArray())
+            ////return (posts)
+        //},
         //post: async(parent, {id}) => {
             //const post = await Post.findOne({_id : ObjectId(id)})
             //return (post)
