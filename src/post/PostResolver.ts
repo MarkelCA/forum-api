@@ -11,7 +11,6 @@ export class PostResolver {
 
     public postResolver = async(parent: Document|undefined, args:Object|undefined) : Promise<Document> => {
         const posts = await this.postService.getPosts()
-       console.log(posts)
         return (posts)
     }
 

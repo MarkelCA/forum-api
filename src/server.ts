@@ -5,18 +5,27 @@ import http from 'http';
 import typeDefs from './type-defs'
 import resolvers from './resolvers.js';
 import { PostResolver } from './post/PostResolver';
+import { AuthorResover } from './author/AuthorResolver';
 
 //import {MongoClient, ObjectId} from 'mongodb'
 import connect from './connection'
 import PostService from './post/PostService';
 import {DocumentNode} from 'graphql';
+import AuthorService from './author/AuthorService';
 
 connect.then((db) => {
     const postService : PostService = new PostService(db, "posts")
     const postResolver : PostResolver = new PostResolver(postService)
 
+
+    const authorService : AuthorService = new AuthorService(db, "posts")
+    const authorResolver : AuthorResover = new AuthorResover(authorService)
+
     const resolvers = {
-        Query : postResolver.getResolver()
+        Query : postResolver.getResolver(),
+        Author : {
+            name : authorResolver.getResolver('name')
+        }
     }
 
 
